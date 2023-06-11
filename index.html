@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>PARTAY TIME</title>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: #000;
+}
+.partybox {
+	float: left;
+	display: block;
+	height: 4em;
+	width: 4em;
+	border: 1px solid #000;
+	margin: 0;
+	padding: 0;
+	background-color: #333;
+}
+</style>
+	</head>
+	<body>
+<script>
+	// Hold all the boxes in the page
+	let boxes = []
+
+	// Fill the page with a bunch of boxes. Don't be too smart about it.
+	boxes = []
+	for (i = 0; i < 500; i++) {
+		let box = document.createElement("div")
+		box.className="partybox"
+		box.style.backgroundColor=""
+		boxes.push(box)
+		document.body.appendChild(box);
+	}
+	
+	// Choose a random color and be biased towards fun party colors
+	function randColor() {
+		let coeffs = [
+				[0, 0, 15],
+				[0, 15, 15],
+				[8, 0, 15],
+				[8, 15, 15],
+				[15, 0, 0],
+				[15, 0, 8],
+				[15, 0, 15],
+				[15, 8, 0],
+				[15, 8, 8]]
+	
+		let coeff = coeffs[Math.floor(Math.random() * coeffs.length)]
+		
+		let red = Math.floor(coeff[0])
+		let green = Math.floor(coeff[1])
+		let blue = Math.floor(coeff[2])
+	
+		let hex = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
+		return "#" + hex[red] + hex[green] + hex[blue]
+	}
+	
+	// Store the timeout so we can clear it to stop the party
+	let timeout = false
+	
+	// Make a bunch of new random party colors
+	function updateColors() {
+		for (i = 0; i < boxes.length; i++) {
+			boxes[i].style.backgroundColor=randColor()
+		}
+		timeout = setTimeout(updateColors, 250)
+	}
+	
+	// Stop the party: clear timeout and set colors to bland
+	function clearColors() {
+		for (i = 0; i < boxes.length; i++) {
+			boxes[i].style.backgroundColor="#333"
+		}
+		clearTimeout(timeout)
+		timeout = false
+	}
+	
+	// Start us off with party mode disabled
+	clearColors()
+	
+	// Click anywhere in the page to start the party
+	document.body.addEventListener("click", function(e) {
+		if(timeout) {
+			clearColors()
+		} else {
+			updateColors()
+		}
+	})
+</script>
+	</body>
+</html>
