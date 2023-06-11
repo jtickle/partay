@@ -22,9 +22,36 @@ body {
 	padding: 0;
 	background-color: #333;
 }
+.instructions {
+	position: absolute;
+	z-index: 2;
+	top: 125px;
+	width: 100%;
+	text-align: center;
+}
+.instructions .content {
+	background: #666;
+	color: #CCC;
+	font-size: 2em;
+	font-family: sans-serif;
+	width: 20em;
+	margin: 0 auto;
+	padding: 1em;
+	border-radius: 1em;
+}
+.hidden {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
 </style>
 	</head>
 	<body>
+		<div class="instructions">
+			<div class="content">
+				Click to start the partay.
+			</div>
+		</div>
 <script>
 	// Hold all the boxes in the page
 	let boxes = []
@@ -87,6 +114,7 @@ body {
 	
 	// Click anywhere in the page to start the party
 	document.body.addEventListener("click", function(e) {
+		document.getElementsByClassName('instructions')[0].classList.add("hidden")
 		if(timeout) {
 			clearColors()
 		} else {
